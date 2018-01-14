@@ -1,10 +1,10 @@
 import telnetlib
 import sys, getopt
 import os
-import httplib
+#import httplib
 
 def getFileContent():
-	tn=telnetlib.Telnet("192.168.1.1")
+	tn=telnetlib.Telnet("192.168.2.1")
 	tn.read_until("Login: ")
 	tn.write("root\n")
 	tn.read_until("Password: ")
@@ -18,7 +18,7 @@ def getFileContent():
 	return content
 
 def simpanTemporary():
-	print "Mengunduh Konfigurasi SSID"
+	print("Mengunduh Konfigurasi SSID")
 	c=getFileContent()
 	f=open("tempIndy","w")
 	f.write(c)
@@ -37,7 +37,7 @@ def muatNoInternet():
 	return s2[5:17]
 
 def daftarLangsung(email,defais,sandi,hp):
-	print "Mendaftarkan Wifi.id"
+	print("Mendaftarkan Wifi.id")
 	c=httplib.HTTPSConnection("my.telkom.co.id/")
 	c.request("POST","registrasi-seamless.php")
 
@@ -53,11 +53,11 @@ def main(argv):
 	try:
 		opts,args=getopt.getopt(argv,"he:n:p:s:",["email=","nama=","password=","smartphone="])
 	except getopt.getoptError:
-		print "indi.py -e <email> -n <nama> -p <sandi> -s <no-hp>"
+		print("indi.py -e <email> -n <nama> -p <sandi> -s <no-hp>")
 		sys.exit()
 	for opt,arg in opts:
 		if opt=="-h":
-			print "indi.py -e <email> -n <nama> -p <sandi> -s <no-hp>"
+			print("indi.py -e <email> -n <nama> -p <sandi> -s <no-hp>")
 			sys.exit()
 		elif opt in("-e","--email"):
 			email=arg
@@ -71,5 +71,5 @@ def main(argv):
 
 if __name__ == "__main__":
 	simpanTemporary()
-	print muatNoInternet()
+	print(muatNoInternet())
 	#main(sys.argv[1:])
